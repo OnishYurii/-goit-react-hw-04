@@ -9,7 +9,7 @@ export const SearchBar = ({ onSubmit }) => {
 
   return (
     <header>
-      <form onSubmit={handleSubmit}>
+      <form className={css.searchForm} onSubmit={handleSubmit}>
         <input
           type="text"
           autoComplete="off"
@@ -17,7 +17,11 @@ export const SearchBar = ({ onSubmit }) => {
           placeholder="Search images and photos"
           name="query"
         />
-        <button type="submit">Search</button>
+        <button type="submit">
+          <svg width="15" height="15">
+            <use href="/src/assets/symbol-defs.svg#icon-search"></use>
+          </svg>
+        </button>
       </form>
     </header>
   );
