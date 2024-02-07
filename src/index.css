@@ -9,7 +9,8 @@
 }
 
 body {
-  padding-top: 30px;
+  padding-top: 90px;
+  padding-bottom: 30px;
   margin: 0;
   text-align: center;
 }
@@ -27,7 +28,6 @@ header {
   width: 100%;
   z-index: 5;
 }
-
 input {
   font-family: inherit;
   padding: 8px;
@@ -61,4 +61,17 @@ button {
 button:hover,
 button:focus {
   background-color: #474541;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
 }
