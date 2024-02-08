@@ -15,7 +15,6 @@ const App = () => {
   const [images, setImages] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
   const handleLoadMore = () => {
@@ -51,11 +50,10 @@ const App = () => {
 
   const openModal = item => {
     setSelectedItem(item);
-    setModalIsOpen(true);
   };
 
   const closeModal = () => {
-    setModalIsOpen(false);
+    setSelectedItem(null);
   };
 
   return (
@@ -75,7 +73,11 @@ const App = () => {
         <LoadMoreBtn onClick={handleLoadMore} />
       )}
       {selectedItem && (
-        <ImageModal isOpen={modalIsOpen} onRequestClose={closeModal} selectedItem={selectedItem} />
+        <ImageModal
+          isOpen={!!selectedItem}
+          onRequestClose={closeModal}
+          selectedItem={selectedItem}
+        />
       )}
 
       <Toaster />
