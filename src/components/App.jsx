@@ -5,14 +5,18 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 import { ErrorMessage } from './ErrorMessage/ErrorMessage';
 import { InfinitySpin } from 'react-loader-spinner';
 import { LoadMoreBtn } from './LoadMoreBtn/LoadMoreBtn';
+import { ImageModal } from './ImageModal/ImageModal';
 import { fetchImages } from '../api';
 
 const App = () => {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [images, setImages] = useState([]);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleLoadMore = () => {
     setPage(page + 1);
@@ -34,7 +38,8 @@ const App = () => {
         setLoading(true);
         setError(false);
         const fetchedData = await fetchImages(query.split('/')[1], page);
-        setImages(prevArticles => [...prevArticles, ...fetchedData]);
+        setImages(prevImages => [...prevImages, ...fetchedData.results]);
+        setTotalPages(fetchedData.total_pages);
       } catch (error) {
         setError(true);
       } finally {
@@ -43,6 +48,15 @@ const App = () => {
     };
     fetchData();
   }, [query, page]);
+
+  const openModal = item => {
+    setSelectedItem(item);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <div>
@@ -56,8 +70,13 @@ const App = () => {
           ariaLabel="infinity-spin-loading"
         />
       )}
-      {images.length > 0 && <ImageGallery images={images} />}
-      {images.length > 0 && !loading && <LoadMoreBtn onClick={handleLoadMore} />}
+      {images.length > 0 && <ImageGallery images={images} onClick={openModal} />}
+      {images.length > 0 && !loading && page !== totalPages && (
+        <LoadMoreBtn onClick={handleLoadMore} />
+      )}
+      {selectedItem && (
+        <ImageModal isOpen={modalIsOpen} onRequestClose={closeModal} selectedItem={selectedItem} />
+      )}
 
       <Toaster />
     </div>
