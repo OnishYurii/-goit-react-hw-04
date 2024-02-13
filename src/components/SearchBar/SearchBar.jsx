@@ -31,7 +31,7 @@ export const SearchBar = ({ onSubmit }) => {
         />
         <button type="submit" className={css.button}>
           <svg width="15" height="15">
-            <use href="/assets/symbol-defs.svg#icon-search"></use>
+            <use href="/src/assets/symbol-defs.svg#icon-search"></use>
           </svg>
         </button>
       </form>
